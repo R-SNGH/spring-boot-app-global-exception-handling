@@ -1,5 +1,7 @@
 package com.crud.demo.controller;
 
+import com.crud.demo.custom.exceptions.BusinessException;
+import com.crud.demo.custom.exceptions.ControllerException;
 import com.crud.demo.entities.Employee;
 import com.crud.demo.service.EmployeeServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +26,31 @@ public class EmployeeController {
     }
 
     @GetMapping("/all/{empid}")
-    public ResponseEntity<Employee> getEmployee(@PathVariable("empid") Long empId){
-        System.out.println("returning the employee: ");
-        Employee employee=employeeServiceInterface.getEmployee(empId);
-        return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+    public ResponseEntity<?> getEmployee(@PathVariable("empid") Long empId){
+        try{
+            Employee employee=employeeServiceInterface.getEmployee(empId);
+            return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+        }catch(BusinessException e){
+            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }catch(Exception e){
+            ControllerException ce = new ControllerException("612","Something bad happened while fetching an employee in Controller Layer.");
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee){
-        Employee savedEmployee = employeeServiceInterface.addEmployee(employee);
-        return new ResponseEntity<Employee>(savedEmployee, HttpStatus.CREATED);
-
+    public ResponseEntity<?> addEmployee(@RequestBody Employee employee){
+        try{
+            Employee savedEmployee = employeeServiceInterface.addEmployee(employee);
+            return new ResponseEntity<Employee>(savedEmployee, HttpStatus.CREATED);
+        }catch(BusinessException e){
+            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }catch(Exception e){
+            ControllerException ce = new ControllerException("611","Something bad happened while adding employee in Controller Layer.");
+            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/delete/{empid}")
@@ -44,7 +60,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Employee> deleteEmployee(@RequestBody Employee employee){
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee){
         Employee updatedEmp = employeeServiceInterface.addEmployee(employee);
         return new ResponseEntity<Employee>(updatedEmp, HttpStatus.ACCEPTED);
     }
