@@ -37,7 +37,7 @@ public class EmployeeController {
 //            ControllerException ce = new ControllerException("612","Something bad happened while fetching an employee in Controller Layer.");
 //            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
 //        }
-        Employee employee=employeeServiceInterface.getEmployee(empId);
+        Employee employee = employeeServiceInterface.getEmployee(empId);
         return new ResponseEntity<Employee>(employee, HttpStatus.OK);
     }
 
