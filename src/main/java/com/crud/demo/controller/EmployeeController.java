@@ -41,16 +41,19 @@ public class EmployeeController {
 
     @PostMapping("/save")
     public ResponseEntity<?> addEmployee(@RequestBody Employee employee){
-        try{
-            Employee savedEmployee = employeeServiceInterface.addEmployee(employee);
-            return new ResponseEntity<Employee>(savedEmployee, HttpStatus.CREATED);
-        }catch(BusinessException e){
-            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
-        }catch(Exception e){
-            ControllerException ce = new ControllerException("611","Something bad happened while adding employee in Controller Layer.");
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
-        }
+//        try{
+//            Employee savedEmployee = employeeServiceInterface.addEmployee(employee);
+//            return new ResponseEntity<Employee>(savedEmployee, HttpStatus.CREATED);
+//        }catch(BusinessException e){
+//            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+//            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+//        }catch(Exception e){
+//            ControllerException ce = new ControllerException("611","Something bad happened while adding employee in Controller Layer.");
+//            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+//        }
+        //Using ControllerAdvice : Global Exception Handling
+        Employee savedEmployee = employeeServiceInterface.addEmployee(employee);
+        return new ResponseEntity<Employee>(savedEmployee, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{empid}")
