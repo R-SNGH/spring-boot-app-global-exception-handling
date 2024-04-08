@@ -27,16 +27,18 @@ public class EmployeeController {
 
     @GetMapping("/all/{empid}")
     public ResponseEntity<?> getEmployee(@PathVariable("empid") Long empId){
-        try{
-            Employee employee=employeeServiceInterface.getEmployee(empId);
-            return new ResponseEntity<Employee>(employee, HttpStatus.OK);
-        }catch(BusinessException e){
-            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
-        }catch(Exception e){
-            ControllerException ce = new ControllerException("612","Something bad happened while fetching an employee in Controller Layer.");
-            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
-        }
+//        try{
+//            Employee employee=employeeServiceInterface.getEmployee(empId);
+//            return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+//        }catch(BusinessException e){
+//            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+//            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+//        }catch(Exception e){
+//            ControllerException ce = new ControllerException("612","Something bad happened while fetching an employee in Controller Layer.");
+//            return new ResponseEntity<ControllerException>(ce, HttpStatus.BAD_REQUEST);
+//        }
+        Employee employee=employeeServiceInterface.getEmployee(empId);
+        return new ResponseEntity<Employee>(employee, HttpStatus.OK);
     }
 
     @PostMapping("/save")

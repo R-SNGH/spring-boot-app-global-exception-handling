@@ -56,13 +56,14 @@ public class EmployeeService implements EmployeeServiceInterface{
 
     @Override
     public Employee getEmployee(Long id) {
-        try{
-            return emprepo.findById(id).get();//findById always returns an Optional.
-        }catch(IllegalArgumentException exception){
-            throw new BusinessException("606","Given employee ID is null. Please send an id. "+exception.getMessage());
-        }catch(NoSuchElementException exception){
-            throw new BusinessException("607","Given employee ID does not exist in DB: "+exception.getMessage());
-        }
+//        try{
+//            return emprepo.findById(id).get();//findById always returns an Optional.
+//        }catch(IllegalArgumentException exception){
+//            throw new BusinessException("606","Given employee ID is null. Please send an id. "+exception.getMessage());
+//        }catch(NoSuchElementException exception){
+//            throw new BusinessException("607","Given employee ID does not exist in DB: "+exception.getMessage());
+//        }
+        return emprepo.findById(id).get();//findById always returns an Optional.
     }
 
     @Override
