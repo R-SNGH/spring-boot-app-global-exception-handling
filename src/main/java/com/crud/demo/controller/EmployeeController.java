@@ -20,6 +20,7 @@ public class EmployeeController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Employee>> getAllEmployees(){
+        //
         System.out.println("returning all the employees in the DB....");
         List<Employee> employees=employeeServiceInterface.getAllEmployees();
         return new ResponseEntity<List<Employee>>(employees, HttpStatus.OK);
